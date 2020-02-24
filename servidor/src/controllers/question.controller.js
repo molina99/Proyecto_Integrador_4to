@@ -1,27 +1,33 @@
 const Question = require("../models/Questions");
 
-async function getQuestion(req, res) {
-  try {
-    const questions = await Question.Questions.findAll();
-    res.json({
-      data: questions
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
+// async function getQuestion(req, res) {
+//   try {
+//     const questions = await Question.Questions.findAll();
+//     res.json({
+//       data: questions
+//     });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// }
 
-async function getQuestionId(req, res) {
-  const { id } = req.params;
-  const question = await Question.Questions.findOne({
-    where: {
-      id
-    }
-  });
-  res.json({
-    data: question
-  });
-}
+const getQuestion = (req, res) => {
+  const { query } = req;
+  Question.Questions.findAll({ where: query })
+    .then(response => {
+      return res.status(200).json({
+        ok: true,
+        data: response
+      });
+    })
+    .catch(error => {
+      return res.status(500).json({
+        ok: false,
+        data: null,
+        mensaje: `Error del servidor: ${error}`
+      });
+    });
+};
 
 async function createQuestion(req, res) {
   const { question, true_answer, false_answer, imagen } = req.body;
@@ -94,7 +100,6 @@ async function updateQuestion(req, res) {
 
 module.exports = {
   getQuestion,
-  getQuestionId,
   createQuestion,
   deleteQuestion,
   updateQuestion
