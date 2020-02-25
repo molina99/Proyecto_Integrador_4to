@@ -25,20 +25,24 @@ class Question extends Component {
   }
 
   deleteUser = value => {
-    Axios.delete(`${API_URL_DELETE}` + value, {
-      data: { id: value }
-    });
-    Swal.fire({
-      title: "¿Eliminar usuario?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Confirmar",
-      cancelButtonText: "Cancelar"
-    }).then(result => {
-      if (result.value) {
-        window.location.assign("http://localhost:3000/users");
-      }
-    });
+    if (this.state.users.length === 1) {
+      Swal.fire("", "No se puede eliminar al usuario");
+    } else {
+      Axios.delete(`${API_URL_DELETE}` + value, {
+        data: { id: value }
+      });
+      Swal.fire({
+        title: "¿Eliminar usuario?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar"
+      }).then(result => {
+        if (result.value) {
+          window.location.assign("http://localhost:3000/users");
+        }
+      });
+    }
   };
 
   render() {
@@ -50,7 +54,7 @@ class Question extends Component {
         <div className="lg:mx-10 lg:ml-64">
           <div className="lg:ml-10 mt-10 border-2 p-5 rounded-lg">
             <h2 className="text-center text-4xl font-thin">
-              Usuarios registrados
+              Administradores registrados
             </h2>
           </div>
           <div className="lg:ml-10 bg-white shadow-md rounded-lg my-6">

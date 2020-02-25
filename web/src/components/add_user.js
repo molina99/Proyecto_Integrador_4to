@@ -37,13 +37,20 @@ class Register extends Component {
       this.post.user_pass === ""
     ) {
       Swal.fire("", "Obligatorio completar todos los campos");
+    } else if (
+      !this.post.user_email.includes("@") ||
+      !this.post.user_email.includes(".")
+    ) {
+      Swal.fire("", "Correo electrónico inválido");
+    } else if (this.post.user_pass.length < 6) {
+      Swal.fire("", "Contraseña debe tener al menos 6 caracteres");
     } else {
       Axios.post(API_URL, this.post)
         .then(response => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Usuario almacenado correctamente",
+            title: "Registro exitoso",
             showConfirmButton: false,
             timer: 1000
           }).then(() => this.props.history.push("/users"));
@@ -64,7 +71,9 @@ class Register extends Component {
           <div className="flex rounded-lg shadow-lg w-full lg:w-3/4 lg:w-1/2 border-2 lg:ml-64 mt-10">
             <div className="flex flex-col w-full p-4">
               <div className="flex flex-col flex-1 justify-center">
-                <h1 className="text-4xl text-center font-thin">Registro</h1>
+                <h1 className="text-4xl text-center font-thin">
+                  Registro del nuevo administrador
+                </h1>
                 <div className="w-full mt-4">
                   <form
                     className="form-horizontal w-3/4 mx-auto"
@@ -96,7 +105,9 @@ class Register extends Component {
                       </div>
                     </div>
                     <div className="flex flex-col mt-4">
-                      <label className="font-thin text-xl mr-5">Email:</label>
+                      <label className="font-thin text-xl mr-5">
+                        Correo electrónico:
+                      </label>
                       <input
                         onChange={this.changeHandler}
                         type="text"
