@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import Header from "./header";
 import Sidebar from "./sidebar";
+import Swal from "sweetalert2";
 
 const API_URL = "http://localhost:4000/createUser";
 
@@ -35,15 +36,20 @@ class Register extends Component {
       this.post.user_email === "" ||
       this.post.user_pass === ""
     ) {
-      alert("Obligatorio completar todos los campos");
+      Swal.fire("", "Obligatorio completar todos los campos");
     } else {
       Axios.post(API_URL, this.post)
         .then(response => {
-          alert("Usuario registrado correctamente");
-          window.location.assign("http://localhost:3000/");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Actualizado correctamente",
+            showConfirmButton: false,
+            timer: 1000
+          }).then(() => this.props.history.push("/users"));
         })
         .catch(error => {
-          alert("Datos Incorrectos");
+          Swal.fire("", "Los datos ingresados son incorrectos");
         });
     }
   };
@@ -115,18 +121,18 @@ class Register extends Component {
                     </div>
                     <div className="flex flex-col mt-8">
                       <div className="flex">
-                        <button
-                          type="submit"
-                          className="mx-auto bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-8 rounded"
-                        >
-                          Enviar
-                        </button>
                         <a
                           className="mx-auto bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-8 rounded"
                           href="/home"
                         >
                           Cancelar
                         </a>
+                        <button
+                          type="submit"
+                          className="mx-auto bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-8 rounded"
+                        >
+                          Crear
+                        </button>
                       </div>
                     </div>
                   </form>

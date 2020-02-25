@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import Sidebar from "./sidebar";
 import Header from "./header";
+import Swal from "sweetalert2";
 
 const API_URL = "http://localhost:4000/getQuestion";
 const API_URL_DELETE = "http://localhost:4000/deleteQuestion/";
@@ -23,12 +24,32 @@ class Question extends Component {
       });
   }
 
+  updateBook = (
+    putId,
+    putQuestion,
+    putTrueAnswer,
+    putFalseAnswer
+    // putImage
+  ) => {
+    localStorage.setItem("id", putId);
+    localStorage.setItem("question", putQuestion);
+    localStorage.setItem("true_answer", putTrueAnswer);
+    localStorage.setItem("false_answer", putFalseAnswer);
+    // localStorage.setItem("imagen", putImage);
+    this.props.history.push("/update_question");
+  };
+
   deleteQuestion = value => {
     Axios.delete(`${API_URL_DELETE}` + value, {
       data: { id: value }
     });
-    alert("Eliminado");
-    window.location.assign("http://localhost:3000/home");
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Pregunta eliminada correctamente",
+      showConfirmButton: false,
+      timer: 1000
+    }).then(() => window.location.assign("http://localhost:3000/questions"));
   };
 
   render() {
@@ -61,31 +82,46 @@ class Question extends Component {
                 <tr className="hover:bg-grey-lighter">
                   <td className="py-4 px-3 border-b border-grey-light">
                     {questions.map(element => (
-                      <p className="p-3 px-5">{element.question}</p>
+                      <p className="p-3 px-5" key={element.id}>
+                        {element.question}
+                      </p>
                     ))}
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light">
                     {questions.map(element => (
-                      <p className="p-3 px-5">{element.true_answer}</p>
+                      <p className="p-3 px-5" key={element.id}>
+                        {element.true_answer}
+                      </p>
                     ))}
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light">
                     {questions.map(element => (
-                      <p className="p-3 px-5">{element.false_answer}</p>
+                      <p className="p-3 px-5" key={element.id}>
+                        {element.false_answer}
+                      </p>
                     ))}
                   </td>
                   {questions.map(element => (
-                    <td className="hidden xl:flex py-4 px-6 border-grey-light">
-                      <p className="px-5" key={element.id}>
+                    <td
+                      className="hidden xl:flex py-4 px-6 border-grey-light"
+                      key={element.id}
+                    >
+                      <p className="px-5">
                         <button
-                          // onClick={() => this.deleteQuestion(element.id)}
+                          onClick={() =>
+                            this.updateBook(
+                              element.id,
+                              element.question,
+                              element.true_answer,
+                              element.false_answer
+                              // element.imagen
+                            )
+                          }
                           className="mt-2 text-gray-200 font-bold py-1 px-3 rounded-full text-xs bg-green-400 hover:bg-green-500"
                         >
                           Editar
                         </button>
                       </p>
-                      {/* ))} */}
-                      {/* {questions.map(element => ( */}
                       <p key={element.id}>
                         <button
                           onClick={() => this.deleteQuestion(element.id)}

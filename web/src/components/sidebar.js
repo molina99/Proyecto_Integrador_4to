@@ -50,14 +50,6 @@ const Sidebar = () => (
                 </li>
               </Link>
             </ul>
-            <ul>
-              <Link to="/players">
-                <li className="mx-8 text-gray-800 hover:text-gray-300">
-                  <i className="fas fa-arrow-circle-right"></i>
-                  Jugadores
-                </li>
-              </Link>
-            </ul>
           </li>
         </ul>
       </div>

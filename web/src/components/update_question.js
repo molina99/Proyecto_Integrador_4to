@@ -4,54 +4,27 @@ import Header from "./header";
 import Sidebar from "./sidebar";
 import Swal from "sweetalert2";
 
-const API_URL = "http://localhost:4000/createQuestion";
+const API = "http://localhost:4000/updateQuestion/";
 
-class Create_Question extends Component {
+class Update_Question extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      question: "",
-      true_answer: "",
-      false_answer: "",
+      id: localStorage.getItem("id"),
+      question: localStorage.getItem("question"),
+      true_answer: localStorage.getItem("true_answer"),
+      false_answer: localStorage.getItem("false_answer"),
+      // imagen: localStorage.getItem("imagen")
+
+      question2: "",
+      true_answer2: "",
+      false_answer2: "",
       imagen: ""
     };
   }
 
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
-  };
-
-  registerQuestion = e => {
-    e.preventDefault();
-    this.post = {
-      question: this.state.question,
-      true_answer: this.state.true_answer,
-      false_answer: this.state.false_answer,
-      imagen: this.state.imagen
-    };
-
-    if (
-      this.post.question === "" ||
-      this.post.true_answer === "" ||
-      this.post.false_answer === "" ||
-      this.post.imagen === ""
-    ) {
-      Swal.fire("", "Obligatorio completar todos los campos");
-    } else {
-      Axios.post(API_URL, this.post)
-        .then(response => {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Pregunta almacenada correctamente",
-            showConfirmButton: false,
-            timer: 1000
-          }).then(() => this.props.history.push("/questions"));
-        })
-        .catch(error => {
-          Swal.fire("", "Los datos ingresados son incorrectos");
-        });
-    }
   };
 
   encodeImageFileAsURL = e => {
@@ -62,6 +35,39 @@ class Create_Question extends Component {
       this.setState({ imagen: e.target.result });
     };
     reader.readAsDataURL(file);
+  };
+
+  updateQuestion = e => {
+    e.preventDefault();
+    this.update = {
+      question: this.state.question,
+      true_answer: this.state.true_answer,
+      false_answer: this.state.false_answer,
+      imagen: this.state.imagen
+    };
+
+    if (
+      this.update.question === "" ||
+      this.update.true_answer === "" ||
+      this.update.false_answer === "" ||
+      this.update.imagen === ""
+    ) {
+      Swal.fire("", "Complete todos los datos para continuar...!");
+    } else {
+      Axios.put(`${API}` + this.state.id, this.update)
+        .then(response => {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Actualizado correctamente",
+            showConfirmButton: false,
+            timer: 1000
+          }).then(() => this.props.history.push("/questions"));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
   onFileChange = e => {
@@ -86,12 +92,12 @@ class Create_Question extends Component {
             <div className="flex flex-col w-full p-4">
               <div className="flex flex-col flex-1 justify-center mb-8">
                 <h1 className="text-4xl text-center font-thin">
-                  Nueva Pregunta
+                  Actualizar Pregunta
                 </h1>
                 <div className="w-full mt-4">
                   <form
                     className="form-horizontal w-3/4 mx-auto"
-                    onSubmit={this.registerQuestion}
+                    onSubmit={this.updateQuestion}
                   >
                     <div className="flex flex-col mt-4">
                       <input
@@ -128,6 +134,7 @@ class Create_Question extends Component {
                       <input
                         className="flex-grow h-8 px-2 rounded border border-grey-400"
                         type="file"
+                        // required={true}
                         name="imagen"
                         placeholder="******"
                         defaultValue={imagen}
@@ -138,7 +145,7 @@ class Create_Question extends Component {
                       <div className="flex">
                         <a
                           className="mx-auto bg-green-500 hover:bg-green-700 text-white text-sm font-semibold py-2 px-8 rounded"
-                          href="http://localhost:3000/home"
+                          href="http://localhost:3000/questions"
                         >
                           Cancelar
                         </a>
@@ -146,7 +153,7 @@ class Create_Question extends Component {
                           type="submit"
                           className="mx-auto bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-8 rounded"
                         >
-                          Crear
+                          Actualizar
                         </button>
                       </div>
                     </div>
@@ -161,4 +168,4 @@ class Create_Question extends Component {
   }
 }
 
-export default Create_Question;
+export default Update_Question;

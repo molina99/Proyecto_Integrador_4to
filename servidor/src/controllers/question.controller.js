@@ -91,10 +91,9 @@ async function updateQuestion(req, res) {
       });
     });
   }
-
   return res.json({
     message: "Question updated succesfully",
-    data: users
+    data: questions
   });
 }
 

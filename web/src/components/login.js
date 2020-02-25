@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Axios from "axios";
-import AlertComplete from "./alert_login";
+import Swal from "sweetalert2";
 
 const API_URL = "http://localhost:4000/login";
 
@@ -20,8 +20,7 @@ class Login extends Component {
   loginAccess = e => {
     e.preventDefault();
     if (this.state.user_email === "" || this.state.user_pass === "") {
-      // alert("Obligatorio completar todos los campos");
-      this.setState({alert_complete:"complete"})
+      Swal.fire("", "Obligatorio completar todos los campos");
     } else {
       Axios.post(API_URL, this.state)
         .then(response => {
@@ -30,17 +29,15 @@ class Login extends Component {
           }
         })
         .catch(error => {
-          alert("Datos Incorrectos");
+          Swal.fire("", "Correo electrónico o constraseña incorrectos");
         });
     }
   };
   render() {
-    const imagen = require("../assets/pelicula.jpg");
     const fondo = require("../assets/fondo.jpg");
     const { user_email, user_pass } = this.state;
     return (
       <div className="bg-teal-500 h-screen w-screen">
-        {this.state.alert_complete=="complete"?<AlertComplete/>:null}
         <div className="flex flex-col items-center flex-1 h-full justify-center px-4 sm:px-0">
           <div className="flex rounded-lg shadow-lg w-full sm:w-3/4 lg:w-1/2 bg-white sm:mx-0">
             <div className="flex flex-col w-full md:w-1/2 p-4">
@@ -86,7 +83,11 @@ class Login extends Component {
               </div>
             </div>
             <div className="hidden md:block md:w-1/2 rounded-r-lg">
-              <img src={fondo} className="h-full bg-cover bg-center rounded-r-lg" />
+              <img
+                src={fondo}
+                className="h-full bg-cover bg-center rounded-r-lg"
+                alt="div"
+              />
             </div>
           </div>
         </div>
