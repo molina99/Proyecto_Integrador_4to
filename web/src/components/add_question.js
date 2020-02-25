@@ -94,39 +94,49 @@ class Create_Question extends Component {
                     onSubmit={this.registerQuestion}
                   >
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">
+                        Pregunta:
+                      </label>
                       <input
                         onChange={this.changeHandler}
                         type="text"
-                        className="flex-grow h-8 px-2 border rounded border-grey-400"
+                        className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                         name="question"
                         value={question}
-                        placeholder="Pregunta"
+                        placeholder="Ingrese la pregunta"
                       />
 
                       <div className="flex flex-col mt-4">
+                        <label className="font-thin text-xl mr-5">
+                          Respuesta correcta:
+                        </label>
                         <input
                           onChange={this.changeHandler}
                           type="text"
-                          className="flex-grow h-8 px-2 border rounded border-grey-400"
+                          className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                           name="true_answer"
                           value={true_answer}
-                          placeholder="Respuesta correcta"
+                          placeholder="Ingrese la respuesta correcta"
                         />
                       </div>
                     </div>
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">
+                        Respuesta incorrecta:
+                      </label>
                       <input
                         onChange={this.changeHandler}
                         type="text"
-                        className="flex-grow h-8 px-2 border rounded border-grey-400"
+                        className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                         name="false_answer"
                         value={false_answer}
-                        placeholder="Respuesta incorrecta"
+                        placeholder="Ingrese la respuesta incorrecta"
                       />
                     </div>
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">Portada:</label>
                       <input
-                        className="flex-grow h-8 px-2 rounded border border-grey-400"
+                        className="flex-grow h-8 px-2 rounded border border-grey-400 ml-32"
                         type="file"
                         name="imagen"
                         placeholder="******"

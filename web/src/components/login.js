@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 import Swal from "sweetalert2";
 
+// const API = "http://192.168.100.116:4000/getUser";
 const API_URL = "http://localhost:4000/login";
 
 class Login extends Component {
@@ -9,10 +10,27 @@ class Login extends Component {
     super(props);
     this.state = {
       user_email: "",
-      user_pass: "",
-      alert_complete: ""
+      user_pass: ""
+      // users: []
     };
   }
+
+  // componentDidMount() {
+  //   Axios.get(API)
+  //     .then(response => {
+  //       this.setState({ users: response.data.data });
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }
+
+  // storageUser = (putUserId, putUserName, putLastName) => {
+  //   localStorage.setItem("id", putUserId);
+  //   localStorage.setItem("user_name", putUserName);
+  //   localStorage.setItem("user_lastname", putLastName);
+  // };
+
   changeHandler = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -33,6 +51,7 @@ class Login extends Component {
         });
     }
   };
+
   render() {
     const fondo = require("../assets/fondo.jpg");
     const { user_email, user_pass } = this.state;
@@ -74,6 +93,13 @@ class Login extends Component {
                       <button
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-semibold py-2 px-4 rounded"
+                        // onClick={() =>
+                        //   this.storageUser(
+                        //     users.id,
+                        //     users.user_name,
+                        //     users.user_lastname
+                        //   )
+                        // }
                       >
                         Ingresar
                       </button>

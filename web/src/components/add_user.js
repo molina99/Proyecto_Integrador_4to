@@ -41,9 +41,9 @@ class Register extends Component {
       Axios.post(API_URL, this.post)
         .then(response => {
           Swal.fire({
-            position: "center",
+            position: "top-end",
             icon: "success",
-            title: "Actualizado correctamente",
+            title: "Usuario almacenado correctamente",
             showConfirmButton: false,
             timer: 1000
           }).then(() => this.props.history.push("/users"));

@@ -62,7 +62,7 @@ async function createUser(req, res) {
 
 async function deleteUser(req, res) {
   const { id } = req.params;
-  const deleteUser = await User.destroy({
+  const deleteUser = await User.Users.destroy({
     where: {
       id
     }
@@ -76,7 +76,7 @@ async function deleteUser(req, res) {
 async function updateUser(req, res) {
   const { id } = req.params;
   const { user_name, user_lastname, user_email, user_pass } = req.body;
-  const users = await User.findAll({
+  const users = await User.Users.findAll({
     attributes: ["id", "user_name", "user_lastname", "user_email", "user_pass"],
     where: {
       id

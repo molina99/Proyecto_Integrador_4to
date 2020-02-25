@@ -15,10 +15,6 @@ class Update_Question extends Component {
       true_answer: localStorage.getItem("true_answer"),
       false_answer: localStorage.getItem("false_answer"),
       // imagen: localStorage.getItem("imagen")
-
-      question2: "",
-      true_answer2: "",
-      false_answer2: "",
       imagen: ""
     };
   }
@@ -52,14 +48,14 @@ class Update_Question extends Component {
       this.update.false_answer === "" ||
       this.update.imagen === ""
     ) {
-      Swal.fire("", "Complete todos los datos para continuar...!");
+      Swal.fire("", "Obligatorio completar todos los campos");
     } else {
       Axios.put(`${API}` + this.state.id, this.update)
         .then(response => {
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Actualizado correctamente",
+            title: "Pregunta actualizada correctamente",
             showConfirmButton: false,
             timer: 1000
           }).then(() => this.props.history.push("/questions"));
@@ -100,20 +96,26 @@ class Update_Question extends Component {
                     onSubmit={this.updateQuestion}
                   >
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">
+                        Pregunta:
+                      </label>
                       <input
                         onChange={this.changeHandler}
                         type="text"
-                        className="flex-grow h-8 px-2 border rounded border-grey-400"
+                        className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                         name="question"
                         value={question}
                         placeholder="Pregunta"
                       />
 
                       <div className="flex flex-col mt-4">
+                        <label className="font-thin text-xl mr-5">
+                          Respuesta correcta:
+                        </label>
                         <input
                           onChange={this.changeHandler}
                           type="text"
-                          className="flex-grow h-8 px-2 border rounded border-grey-400"
+                          className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                           name="true_answer"
                           value={true_answer}
                           placeholder="Respuesta correcta"
@@ -121,18 +123,22 @@ class Update_Question extends Component {
                       </div>
                     </div>
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">
+                        Respuesta incorrecta:
+                      </label>
                       <input
                         onChange={this.changeHandler}
                         type="text"
-                        className="flex-grow h-8 px-2 border rounded border-grey-400"
+                        className="flex-grow h-8 px-2 border rounded border-grey-400 ml-32"
                         name="false_answer"
                         value={false_answer}
                         placeholder="Respuesta incorrecta"
                       />
                     </div>
                     <div className="flex flex-col mt-4">
+                      <label className="font-thin text-xl mr-5">Portada:</label>
                       <input
-                        className="flex-grow h-8 px-2 rounded border border-grey-400"
+                        className="flex-grow h-8 px-2 rounded border border-grey-400 ml-32"
                         type="file"
                         // required={true}
                         name="imagen"
